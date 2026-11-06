@@ -1,37 +1,19 @@
-
-name: PersianGlass Desktop Build
-
+name: Build PersianGlass Desktop
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
-
+    branches: [ main, master ]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-
-      - name: Publish Windows x64
-        run: >
-          dotnet publish PersianGlassDesktop.csproj
-          -c Release
-          -r win-x64
-          --self-contained true
-          /p:PublishSingleFile=true
-          /p:IncludeNativeLibrariesForSelfExtract=true
-
-      - name: Upload application
-        uses: actions/upload-artifact@v4
+      - name: Publish x64
+        run: dotnet publish PersianGlassDesktop/PersianGlassDesktop.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
+      - uses: actions/upload-artifact@v4
         with:
-          name: PersianGlass-Windows-x64
-          path: bin/Release/net8.0-windows/win-x64/publish/
-          if-no-files-found: error
+          name: PersianGlassDesktop-V2-win-x64
+          path: PersianGlassDesktop/bin/Release/net8.0-windows/win-x64/publish/
