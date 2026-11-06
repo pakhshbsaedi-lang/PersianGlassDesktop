@@ -1,0 +1,107 @@
+<Window x:Class="PersianGlassDesktop.MainWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="PersianGlass Desktop" Width="430" Height="780" MinWidth="390" MinHeight="690"
+ WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
+ Background="Transparent" Topmost="False" ShowInTaskbar="False"
+ FlowDirection="RightToLeft" FontFamily="Segoe UI">
+ <Window.Resources>
+  <SolidColorBrush x:Key="Ink" Color="#FFF4F7FF"/>
+  <SolidColorBrush x:Key="Muted" Color="#FFB5C3D7"/>
+  <Style TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource Ink}"/><Setter Property="TextWrapping" Value="Wrap"/></Style>
+  <Style x:Key="Card" TargetType="Border"><Setter Property="Background" Value="#B91C2B43"/><Setter Property="BorderBrush" Value="#45FFFFFF"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="15"/><Setter Property="Padding" Value="11"/><Setter Property="Margin" Value="4"/></Style>
+  <Style x:Key="Small" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource Muted}"/><Setter Property="FontSize" Value="10"/></Style>
+  <Style x:Key="Action" TargetType="Button"><Setter Property="Foreground" Value="#FFF5F8FF"/><Setter Property="Background" Value="#334F6B8A"/><Setter Property="BorderBrush" Value="#55FFFFFF"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="7,3"/><Setter Property="Margin" Value="2"/><Setter Property="Cursor" Value="Hand"/></Style>
+ </Window.Resources>
+ <Border x:Name="RootBorder" CornerRadius="23" Background="#E619293E" BorderBrush="#70FFFFFF" BorderThickness="1" Padding="10">
+  <Border.Effect><DropShadowEffect BlurRadius="25" ShadowDepth="3" Opacity=".35"/></Border.Effect>
+  <Grid>
+   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <Grid Grid.Row="0" Margin="5,2,5,6" MouseLeftButtonDown="Header_MouseLeftButtonDown">
+    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel><TextBlock Text="PERSIAGLASS  /  DESKTOP" FontSize="9" Foreground="#FF76D9E8" FontWeight="Bold"/><TextBlock Text="داشبورد هوشمند رومیزی" FontSize="17" FontWeight="SemiBold"/></StackPanel>
+    <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="LeftToRight">
+     <Button x:Name="PinButton" Style="{StaticResource Action}" Content="📌" ToolTip="همیشه بالا" Click="Pin_Click"/>
+     <Button x:Name="LockButton" Style="{StaticResource Action}" Content="🔓" ToolTip="قفل موقعیت" Click="Lock_Click"/>
+     <Button Style="{StaticResource Action}" Content="—" Click="Minimize_Click"/>
+     <Button Style="{StaticResource Action}" Content="×" Click="Close_Click"/>
+    </StackPanel>
+   </Grid>
+   <Border Grid.Row="1" Style="{StaticResource Card}" Margin="3,2,3,5" BorderBrush="#6684DDF0">
+    <Grid>
+     <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+     <StackPanel><TextBlock x:Name="ClockText" Text="۰۰:۰۰:۰۰" FontSize="36" FontWeight="Light" HorizontalAlignment="Right"/>
+      <TextBlock x:Name="JalaliText" Text="تاریخ شمسی" FontSize="16" Foreground="#FFB6E8F1"/>
+      <TextBlock x:Name="WeekdayText" Text="روز هفته" Style="{StaticResource Small}"/>
+      <TextBlock x:Name="GregorianText" Text="Gregorian" Style="{StaticResource Small}" FlowDirection="LeftToRight"/>
+      <TextBlock x:Name="HijriText" Text="Hijri" Style="{StaticResource Small}"/>
+     </StackPanel>
+     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
+      <TextBlock Text="اهواز" Foreground="#FF7FE3D0" FontSize="13" HorizontalAlignment="Center"/>
+      <TextBlock Text="☀" FontSize="34" HorizontalAlignment="Center" Foreground="#FFFFD17B"/>
+      <TextBlock Text="وضعیت هوا" Style="{StaticResource Small}" HorizontalAlignment="Center"/>
+     </StackPanel>
+    </Grid>
+   </Border>
+   <Grid Grid.Row="2">
+    <Grid.RowDefinitions><RowDefinition Height="1.16*"/><RowDefinition Height=".88*"/><RowDefinition Height=".84*"/></Grid.RowDefinitions>
+    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+    <Border Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource Card}">
+     <Grid>
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+      <Grid>
+       <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+       <TextBlock Text="تقویم و مناسبت‌ها" FontWeight="SemiBold" Foreground="#FFBDA7FF"/>
+       <Button Grid.Column="2" Style="{StaticResource Action}" Content="امروز" Click="Today_Click"/>
+       <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="LeftToRight">
+        <Button Style="{StaticResource Action}" Content="‹" Click="NextMonth_Click"/>
+        <Button Style="{StaticResource Action}" Content="›" Click="PreviousMonth_Click"/>
+       </StackPanel>
+      </Grid>
+      <TextBlock x:Name="MonthText" Grid.Row="1" Text="ماه" FontSize="12" HorizontalAlignment="Center" Margin="0,1,0,5" Foreground="#FFB8D9FF"/>
+      <UniformGrid x:Name="CalendarGrid" Grid.Row="2" Columns="7"/>
+     </Grid>
+    </Border>
+    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource Card}">
+     <StackPanel><TextBlock Text="آب‌وهوای اهواز" Foreground="#FF7FE3D0" FontWeight="SemiBold"/>
+      <TextBlock x:Name="WeatherTemp" Text="— °" FontSize="24" Margin="0,4"/>
+      <TextBlock x:Name="WeatherDetails" Text="رطوبت —  |  باد —" Style="{StaticResource Small}"/>
+      <TextBlock x:Name="WeatherStatus" Text="برای دریافت داده، اینترنت لازم است" Style="{StaticResource Small}" Margin="0,4"/>
+      <TextBlock Text="پیش‌بینی ۷ روزه و AQI: در انتظار اتصال منبع" Style="{StaticResource Small}"/>
+     </StackPanel>
+    </Border>
+    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Card}">
+     <StackPanel><TextBlock Text="بازارها" Foreground="#FFFFCF7A" FontWeight="SemiBold"/>
+      <TextBlock Text="دلار آزاد" Style="{StaticResource Small}" Margin="0,6,0,0"/>
+      <TextBlock x:Name="UsdValue" Text="— تومان" FontSize="16"/>
+      <TextBlock Text="طلای ۱۸ عیار · هر گرم" Style="{StaticResource Small}" Margin="0,5,0,0"/>
+      <TextBlock x:Name="GoldValue" Text="— تومان" FontSize="16" Foreground="#FFFFD27C"/>
+      <TextBlock Text="نفت برنت" Style="{StaticResource Small}" Margin="0,5,0,0"/>
+      <TextBlock x:Name="BrentValue" Text="— دلار/بشکه" FontSize="14"/>
+      <TextBlock Text="قیمت‌ها فقط با منبع معتبر نمایش داده می‌شوند." Style="{StaticResource Small}" Margin="0,4,0,0"/>
+     </StackPanel>
+    </Border>
+    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Card}">
+     <StackPanel><TextBlock Text="خورشید و نماز" Foreground="#FFFFA9C8" FontWeight="SemiBold"/>
+      <TextBlock Text="طلوع خورشید" Style="{StaticResource Small}" Margin="0,7,0,0"/><TextBlock Text="—:—" FontSize="15"/>
+      <TextBlock Text="غروب خورشید" Style="{StaticResource Small}" Margin="0,4,0,0"/><TextBlock Text="—:—" FontSize="15"/>
+      <TextBlock Text="اوقات شرعی: منبع تعیین نشده" Style="{StaticResource Small}" Margin="0,5,0,0"/>
+     </StackPanel>
+    </Border>
+    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource Card}">
+     <StackPanel><TextBlock Text="یادآورها و شمارش" Foreground="#FFBDA7FF" FontWeight="SemiBold"/>
+      <TextBlock x:Name="ReminderText" Text="یادآوری ثبت نشده" FontSize="12" Margin="0,8,0,0"/>
+      <TextBlock Text="پیشرفت ماه" Style="{StaticResource Small}" Margin="0,7,0,0"/>
+      <ProgressBar x:Name="MonthProgress" Height="7" Value="0" Maximum="100" Foreground="#FF70D9C5" Background="#334A6078"/>
+      <TextBlock x:Name="ProgressText" Text="—" Style="{StaticResource Small}" Margin="0,4,0,0"/>
+      <Button Content="تنظیمات" Style="{StaticResource Action}" HorizontalAlignment="Left" Click="Settings_Click"/>
+     </StackPanel>
+    </Border>
+   </Grid>
+   <DockPanel Grid.Row="3" Margin="5,5,5,0">
+    <TextBlock x:Name="StatusText" Text="آماده · داده‌های زنده هنوز پیکربندی نشده‌اند" Style="{StaticResource Small}" VerticalAlignment="Center"/>
+    <TextBlock Text="V2" Foreground="#FF7FE3D0" FontSize="10" DockPanel.Dock="Left"/>
+   </DockPanel>
+  </Grid>
+ </Border>
+</Window>
